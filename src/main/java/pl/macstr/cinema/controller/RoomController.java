@@ -34,4 +34,9 @@ public class RoomController {
     Room addNewRoom(@RequestBody Room reqRoom){
         return repository.save(reqRoom);
     }
+
+    @DeleteMapping("/{id}")
+    void deleteRoomById(@PathVariable Integer id){
+        repository.deleteById(id);
+    }
 }

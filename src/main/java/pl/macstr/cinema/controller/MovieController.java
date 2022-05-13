@@ -34,4 +34,9 @@ public class MovieController {
         return repository.save(reqMovie);
     }
 
+    @DeleteMapping("/{id}")
+    void deleteMovieById(@PathVariable Integer id){
+        repository.deleteById(id);
+    }
+
 }
