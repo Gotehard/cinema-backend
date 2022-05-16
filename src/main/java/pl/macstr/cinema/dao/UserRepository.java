@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
     Optional<User> findByUserName(String username);
+    Optional<User> findByEmail(String email);
     boolean removeByUserName(String username);
     void deleteById(Integer id);
 }
