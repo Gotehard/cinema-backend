@@ -1,42 +1,35 @@
 package pl.macstr.cinema.controller;
 
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
-import pl.macstr.cinema.dao.RoomRepository;
 import pl.macstr.cinema.model.Room;
-
-import java.util.Optional;
+import pl.macstr.cinema.service.RoomService;
 
 @RestController
 @RequestMapping("/api/room")
 public class RoomController {
-    RoomRepository repository;
+    RoomService service;
 
-    public RoomController(RoomRepository repository) {
-        this.repository = repository;
+    public RoomController(RoomService service) {
+        this.service = service;
     }
 
     @GetMapping
-    Iterable<Room> getAllRooms(){
-        return repository.findAll();
+    Iterable<Room> getAllRooms() {
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
-    Room getRoomById(@PathVariable Integer id){
-        Optional<Room> room = repository.findById(id);
-        if (room.isPresent()){
-            return room.get();
-        }
-        return null;
+    Room getRoomById(@PathVariable Integer id) {
+        return service.findById(id);
     }
 
     @PostMapping
     Room addNewRoom(@RequestBody Room reqRoom){
-        return repository.save(reqRoom);
+        return service.save(reqRoom);
     }
 
     @DeleteMapping("/{id}")
     void deleteRoomById(@PathVariable Integer id){
-        repository.deleteById(id);
+        service.deleteById(id);
     }
 }

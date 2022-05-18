@@ -1,42 +1,36 @@
 package pl.macstr.cinema.controller;
 
 import org.springframework.web.bind.annotation.*;
-import pl.macstr.cinema.dao.MovieRepository;
 import pl.macstr.cinema.model.Movie;
-
-import java.util.Optional;
+import pl.macstr.cinema.service.MovieService;
 
 @RestController
 @RequestMapping("/api/movie")
 public class MovieController {
-    MovieRepository repository;
+    MovieService service;
 
-    public MovieController(MovieRepository repository) {
-        this.repository = repository;
+    public MovieController(MovieService service) {
+        this.service = service;
     }
 
     @GetMapping
-    Iterable<Movie> getAllMovies(){
-        return repository.findAll();
+    Iterable<Movie> getAllMovies() {
+        return service.findAll();
     }
 
     @GetMapping("/{id}")
-    Movie getMovieById(@PathVariable Integer id){
-        Optional<Movie> movie = repository.findById(id);
-        if (movie.isPresent()){
-            return movie.get();
-        }
-        return null;
+    Movie getMovieById(@PathVariable Integer id) {
+        return service.findById(id);
     }
 
     @PostMapping
     Movie addNewMovie(@RequestBody Movie reqMovie){
-        return repository.save(reqMovie);
+        return service.save(reqMovie);
     }
 
     @DeleteMapping("/{id}")
     void deleteMovieById(@PathVariable Integer id){
-        repository.deleteById(id);
+        service.deleteById(id);
     }
 
 }
