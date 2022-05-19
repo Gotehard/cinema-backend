@@ -17,9 +17,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private RestAuthenticationSuccessHandler successHandler;
-    private RestAuthenticationFailureHandler failureHandler;
-    private CustomUserDetailsService userDetailsService;
+    private final RestAuthenticationSuccessHandler successHandler;
+    private final RestAuthenticationFailureHandler failureHandler;
+    private final CustomUserDetailsService userDetailsService;
 
     @Value("${jwt.token.key}")
     String secret;
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/", "/auth/signup", "/auth/refresh").permitAll()
+                .antMatchers("/", "/api/auth/sign-up", "/api/auth/refresh").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
